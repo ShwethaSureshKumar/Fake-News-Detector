@@ -86,5 +86,4 @@ This avoids scraping entire web pages, ensures higher precision, and reduces noi
 - NLTK VADER (Sentiment Analysis)
 - SerpAPI (Google Search API)
 
-## Example Output
 
