@@ -1,0 +1,8 @@
+Flask
+Flask-CORS
+requests
+beautifulsoup4
+google-search-results
+spacy
+nltk
+scikit-learn
