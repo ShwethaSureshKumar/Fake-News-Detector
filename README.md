@@ -1,7 +1,6 @@
 # Fake-News-Detector
 9th sem IR Package
 
-# Fake News Detector – Automated Fact Verification System
 
 ## Problem Statement
 The spread of online misinformation is a major societal challenge. Traditional manual verification is too slow, while simple blacklisting cannot handle constantly evolving claims and newly emerging misinformation. Therefore, an automated and scalable fact-verification mechanism is needed.
