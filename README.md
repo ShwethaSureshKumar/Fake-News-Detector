@@ -1,27 +1,90 @@
 # Fake-News-Detector
 9th sem IR Package
 
-PROBLEM STATEMENT :
-The spread of online misinformation is a significant societal problem. Manual verification is too slow for the pace of new content, while simple blacklisting is an insufficient solution for evolving claims.
-OBJECTIVE :
-To design, build, and deploy an automated API server that can receive any news article URL, extract its primary claim in real-time, and deliver an evidence-based verdict on its authenticity by dynamically retrieving and analyzing web-based evidence.
-ABSTRACT :
-This project implements a full-stack, automated verification pipeline, integrating a Chrome browser extension (frontend) with a Python Flask server (backend).
-1.	Browser Extension: The user-facing extension, while on any news article, sends the current tab's URL to the backend API at the click of a button.
-2.	API Endpoint: A Flask server provides an API endpoint that receives the URL from the extension.
-3.	Information Extraction: The system scrapes the article's text and uses TextRank, a graph-based Extractive Summarization algorithm, to identify the most central and representative sentence to use as the claim.
-4.	Evidence Retrieval: This claim is fed into the SerpAPI (Google Search) to retrieve the top 10 most relevant evidence snippets and their source URLs from the live web.
-5.	ML Verdict: The core innovation is a Weighted Ensemble Model that combines scores from three independent expert models to form a robust, final verdict:
-○	Semantic Model: Uses Spacy’s word embeddings to calculate a semantic score based on the contextual similarity between the claim and the evidence.
-○	Sentiment Model: Uses NLTK Vader to calculate a sentiment score. A strong negative score acts as a powerful signal for debunking articles.
-○	Source Model: A Rule-Based Classifier calculates a source score by looking up the evidence domains in a static trust model.
-A final, weighted average of these three scores (60% semantic, 30% sentiment, 10% source) is calculated. This final score is then mapped to the definitive verdict: "VERIFIED (TRUE)", "VERIFIED (FALSE)", or "UNVERIFIED", which is sent back to the browser extension.
-DATASET USED:
-The system builds a real-time, on-demand dataset for each request. It retrieves the top 10 organic Google search results (snippets + URLs) using SerpAPI. The analysis is performed directly on these snippets, which serve as high-relevance summaries. This avoids the noise and errors from scraping full, complex web pages, leading to a faster and more precise analysis.
-METRICS:
-The system uses a weighted ensemble of three core metrics to generate its final qualitative result:
-●	semantic_score: (Normalized 0.0-1.0) The average semantic similarity between the claim and the evidence snippets, calculated using spaCy’s word embeddings.
-●	sentiment_score: (Normalized -1.0 to 1.0) The average sentiment of the evidence. This is used to detect the negative tone of "debunking" articles.
-●	source_score: (Normalized -1.0 to 1.0) The average trust score of the evidence domains, based on the classifier.
+# Fake News Detector – Automated Fact Verification System
 
+## Problem Statement
+The spread of online misinformation is a major societal challenge. Traditional manual verification is too slow, while simple blacklisting cannot handle constantly evolving claims and newly emerging misinformation. Therefore, an automated and scalable fact-verification mechanism is needed.
+
+## Objective
+To design, build, and deploy an automated API system that:
+- accepts any news article URL,
+- extracts the primary claim in real-time, and
+- verifies its authenticity by retrieving and analyzing evidence from the web.
+
+The system returns a verdict based on dynamically collected online evidence.
+
+## System Overview
+This project implements a full-stack, automated verification pipeline integrating:
+
+### 1. Browser Extension (Frontend)
+- User clicks a button on the extension while reading any news article
+- The extension sends the current URL to the backend API
+
+### 2. Flask API Server (Backend)
+- Receives the URL from the browser extension
+- Runs automated verification steps
+
+## Methodology (Pipeline)
+
+### 1. Information Extraction
+- The system scrapes the article text
+- Uses TextRank (Graph-based Extractive Summarization)
+- Extracts the most central sentence as the main claim
+
+### 2. Evidence Retrieval
+- The extracted claim is passed to SerpAPI (Google Search)
+- Retrieves top 10 evidence snippets and URLs
+- These snippets are used as real-time evidence
+
+### 3. Machine Learning Verdict (Weighted Ensemble Model)
+Three independent models contribute scores:
+
+#### Semantic Model (60%)
+- spaCy word embeddings
+- Measures semantic similarity between claim and evidence
+
+#### Sentiment Model (30%)
+- Uses NLTK VADER
+- Detects negative sentiment common in debunking articles
+
+#### Source Model (10%)
+- Rule-based trust score
+- Evaluates the credibility of evidence domains
+
+The final decision is generated by a weighted average of all three scores.
+
+## Output
+The weighted score is mapped into:
+- VERIFIED (TRUE)
+- VERIFIED (FALSE)
+- UNVERIFIED
+
+This verdict is sent back to the browser extension in real-time.
+
+## Dataset
+This project does not rely on a static dataset.  
+Instead, it builds a real-time dataset per request by fetching:
+- top 10 organic search results,
+- evidence snippets,
+- and their URLs.
+
+This avoids scraping entire web pages, ensures higher precision, and reduces noise.
+
+## Metrics
+
+| Metric | Range | Description |
+|--------|--------|-------------|
+| semantic_score | 0.0 – 1.0 | Semantic similarity between claim and evidence |
+| sentiment_score | -1.0 – 1.0 | Detects negative (debunking) sentiment |
+| source_score | -1.0 – 1.0 | Domain trustworthiness |
+
+## Technologies Used
+- Chrome Extension (JavaScript)
+- Python Flask (API)
+- spaCy (NLP)
+- NLTK VADER (Sentiment Analysis)
+- SerpAPI (Google Search API)
+
+## Example Output
 
